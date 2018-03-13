@@ -2,16 +2,29 @@ package com.edivaldova.cursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/*Fazendo o mapeamento da Class Catetoria para que se possa criar a tabela categoria automaticamente no banco de dados H2.
+ *@Entity - informa que essa classe será uma entidade do JPA
+ */
+
+
+@Entity
 public class Categoria implements Serializable {
 	/* Implementar Serializable para que os objetos da classe (Categoria) possam ser convertidos para uma sequencia de bytes
 	 * para que eles possam ser gravados em arquivos, trafegar em redes, etc. É uma exigência da linguagem.
 	 */
 	private static final long serialVersionUID = 1L; //1L indica que é a primeira versão da classe
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //Definindo a estratégia de geração automática de Ids das categorias
 	private Integer id;
 	private String nome;
 	
-	
+		
 	public Categoria() {
 		
 	}
