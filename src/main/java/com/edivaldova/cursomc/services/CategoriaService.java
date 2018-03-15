@@ -1,5 +1,7 @@
 package com.edivaldova.cursomc.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,13 @@ public class CategoriaService {
 	 * de controle. 
 	 */
 	@Autowired
-	private CategoriaRepository repo; //objeto repo irá buscar no BD uma categoria, dado um certo id
+	private CategoriaRepository repo; 
 	
-	public Categoria buscar (Integer id) {
-		Categoria obj = repo.getOne(id);
+	//Atualização do método find(Integer id), face versão 2.0.0 do Spring não suportar o indicado na aula
+	public Categoria find(Integer id) {
+		Optional<Categoria> obj = repo.findById(id);
 		
-		return obj;
+		return obj.orElse(null);
 		
 	}
 }
