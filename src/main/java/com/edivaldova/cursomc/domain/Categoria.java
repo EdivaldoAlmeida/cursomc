@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*Fazendo o mapeamento da Class Catetoria para que se possa criar a tabela categoria automaticamente no banco de dados H2.
  *@Entity - informa que essa classe será uma entidade (uma tabela) do JPA
  *@id - indica que o atributo id será a chave primária da tabela.
@@ -36,6 +38,7 @@ import javax.persistence.ManyToMany;
 	 * basta informar que esse mapeamento aqui é apenas um outro lado de um outro mapeamento que foi feito
 	 * sobre um atributo chamado categoria --> @ManyToMany(mappedBy= "categorias")	 
 	*/
+	@JsonManagedReference //Referência gerenciada pelo Json - Sempre ao lado que se deseja que venham objetos associados.
 	@ManyToMany(mappedBy= "categorias")	
 	private List<Produto> produtos = new ArrayList<>();	
 	
