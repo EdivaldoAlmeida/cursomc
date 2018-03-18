@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.edivaldova.cursomc.domain.Categoria;
 import com.edivaldova.cursomc.domain.Cidade;
+import com.edivaldova.cursomc.domain.Cliente;
+import com.edivaldova.cursomc.domain.Endereco;
 import com.edivaldova.cursomc.domain.Estado;
 import com.edivaldova.cursomc.domain.Produto;
+import com.edivaldova.cursomc.domain.enums.TipoCliente;
 import com.edivaldova.cursomc.repositories.CategoriaRepository;
 import com.edivaldova.cursomc.repositories.CidadeRepository;
+import com.edivaldova.cursomc.repositories.ClienteRepository;
+import com.edivaldova.cursomc.repositories.EnderecoRepository;
 import com.edivaldova.cursomc.repositories.EstadoRepository;
 import com.edivaldova.cursomc.repositories.ProdutoRepository;
 
@@ -29,7 +34,10 @@ public class CursomcApplication implements CommandLineRunner {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -73,11 +81,23 @@ public class CursomcApplication implements CommandLineRunner {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est1.getCidades().addAll(Arrays.asList(c2, c3));
 		
-		//Salvando estados e cidades no bd
+		//Salvando estados e cidades no bd. Estado antes pois é independente
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		//A ordem da instanciação é importante, pois há entidades que dependem de outras.
+		Cliente cli1 = new Cliente(null, "Maria", "maria@gmail.com", "387736726", TipoCliente.PESSOAFISICA);
 		
+		cli1.getTelefones().addAll(Arrays.asList("9987-9779", "8798-8778"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Ilhotas", "345839398", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "600", "Sala 2", "Centro", "898797099", cli1, c2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		//Salvando cliente primeiro, pois é independente
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 		
 		
