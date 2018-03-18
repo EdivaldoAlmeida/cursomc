@@ -1,7 +1,5 @@
 package com.edivaldova.cursomc;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.edivaldova.cursomc.domain.Categoria;
+import com.edivaldova.cursomc.domain.Cidade;
+import com.edivaldova.cursomc.domain.Estado;
 import com.edivaldova.cursomc.domain.Produto;
 import com.edivaldova.cursomc.repositories.CategoriaRepository;
+import com.edivaldova.cursomc.repositories.CidadeRepository;
+import com.edivaldova.cursomc.repositories.EstadoRepository;
 import com.edivaldova.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -21,7 +23,13 @@ public class CursomcApplication implements CommandLineRunner {
 	//CategoriaRepository será responsável por salvar Categorias no BD
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	@Autowired ProdutoRepository produtoReopository;
+	@Autowired 
+	private ProdutoRepository produtoReopository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -47,10 +55,32 @@ public class CursomcApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
-		
 		//Arrays.asList cria uma lista automaticamente com a quantidade necessária de itens
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoReopository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		
+		/*---------------Instanciando cidades e estados-----------------------*/
+		
+		Estado est1 = new Estado(null, "Piauí");
+		Estado est2 = new Estado(null, "São Paulo");
+		
+		Cidade c1 = new Cidade(null, "Teresina", est1);
+		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+		
+		//Adicionando todas as cidades pertencentes a seus estados
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est1.getCidades().addAll(Arrays.asList(c2, c3));
+		
+		//Salvando estados e cidades no bd
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		
+		
+		
+		
 	}
 	
 	
