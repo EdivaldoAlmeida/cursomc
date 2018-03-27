@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity //informa que será uma entidade
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +20,7 @@ public class Estado implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	@JsonBackReference
 	//Para associação com cidade. Um estado possui várias cidades
 	@OneToMany(mappedBy="estado")//atributo "estado" foi o atributo mapeado em cidade
 	private List<Cidade> cidades = new ArrayList<>();
