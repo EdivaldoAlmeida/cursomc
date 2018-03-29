@@ -15,9 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity //informa que ela será uma entidade
 public class Produto implements Serializable {
@@ -37,11 +35,8 @@ public class Produto implements Serializable {
 	 * estando-se dentro dessa classe.
 	 * inverseJoinColumns - Utilizada para informar o nome da outra chave estrangeira (que irá referenciar Categoria)
 	*/
-	/*
-	 * A anotation @JsonBackReference - Omite a lista de categorias, pois do outro lado da associação os objetos já foram
-	 * buscados - ver (@JsonManagedReferenc) em Categoria. Caso não existisse essa anotation a busca seria cíclica
-	 */
-	@JsonBackReference 
+
+	@JsonIgnore 
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "produto_id"),
