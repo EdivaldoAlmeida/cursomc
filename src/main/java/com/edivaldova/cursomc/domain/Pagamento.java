@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.edivaldova.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED) //Super classe com estratégia de geração das tabelas
@@ -23,6 +24,7 @@ public abstract class Pagamento implements Serializable {
 	
 	private Integer estado;
 	
+	@JsonBackReference
 	@OneToOne //mapeamento um p/ um
 	@JoinColumn(name="pedido_id") //Informa q o campo pedido_id está mapeando com pedido
 	@MapsId //Garante que esse id (do pagamento) seja o mesmo id do pedido
