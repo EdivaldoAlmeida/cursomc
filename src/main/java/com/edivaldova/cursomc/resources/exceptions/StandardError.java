@@ -1,7 +1,8 @@
 package com.edivaldova.cursomc.resources.exceptions;
 
-public class StandardError {
-	
+import java.io.Serializable;
+
+public class StandardError implements Serializable{	
 	private static final long serialVersionUID = 1l;
 
 	private Integer status;
