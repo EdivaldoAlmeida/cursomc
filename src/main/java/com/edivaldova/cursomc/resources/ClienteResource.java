@@ -1,5 +1,6 @@
 package com.edivaldova.cursomc.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edivaldova.cursomc.domain.Cliente;
 import com.edivaldova.cursomc.dto.ClienteDTO;
+import com.edivaldova.cursomc.dto.ClienteNewDTO;
 import com.edivaldova.cursomc.services.ClienteService;
 
 @RestController //Essa classe (ClienteResource) será um controlador Rest
@@ -78,6 +81,14 @@ public class ClienteResource {
 		 * STREAM é um recurso do JAVA 8. MAP faz uma operação para cada objeto da lista.
 		 * -> é uma função anônima que recebe um obj e cria uma nova ClienteDTO e passa esse objeto como argumento.
 		 * Depois volta esse obj para o tipo lista utilizando o Collectors.toList. Resumindo transforma uma lista em outra... 			 */
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
+		Cliente obj = service.fromDTO(objDto);
+		URI uri	= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();		
+		
+		return ResponseEntity.created(uri).build();	
 	}
 	
 	

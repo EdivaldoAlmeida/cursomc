@@ -27,7 +27,7 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-	private Integer tipo; //Internamente a classe vai armazenar Integer, mas par o mundo
+	private Integer tipo; //Internamen	te a classe vai armazenar Integer, mas par o mundo
 	//externo vai expor um TipoCliente. Para isso houve alterações no construtor, get e set
 	
 	@OneToMany(mappedBy="cliente")
